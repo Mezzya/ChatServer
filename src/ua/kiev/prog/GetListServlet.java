@@ -24,11 +24,31 @@ public class GetListServlet extends HttpServlet {
 		if (cookies!=null)
 		{
 			for (Cookie cookie: cookies ) {
-				System.out.println(cookie.getName()+"!!!");
-				if (cookie.getName()=="user")
+//				System.out.println(cookie.getName()+" : "+cookie.getValue());
+				if (cookie.getName().equals("user"))
 				{
+
+
 					if (userList.getUserbyLogin(cookie.getValue())!=null)
 					{
+//					Такой клиент присутствуетв списке пользователей. Можно отдавать чат
+
+						String fromStr = req.getParameter("from");
+						int from = 0;
+						try {
+							from = Integer.parseInt(fromStr);
+						} catch (Exception ex) {
+							resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+							return;
+						}
+
+						String json = msgList.toJSON(from, cookie.getValue());
+						if (json != null) {
+							OutputStream os = resp.getOutputStream();
+							byte[] buf = json.getBytes(StandardCharsets.UTF_8);
+							os.write(buf);
+						}
+						return;
 
 					}
 
@@ -37,22 +57,8 @@ public class GetListServlet extends HttpServlet {
 
 
 			}
-		} else System.out.println(">> cookie null");
+		}
 
-		String fromStr = req.getParameter("from");
-		int from = 0;
-		try {
-			from = Integer.parseInt(fromStr);
-		} catch (Exception ex) {
-			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return;
-		}
-		
-		String json = msgList.toJSON(from);
-		if (json != null) {
-			OutputStream os = resp.getOutputStream();
-            byte[] buf = json.getBytes(StandardCharsets.UTF_8);
-			os.write(buf);
-		}
+		resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 	}
 }

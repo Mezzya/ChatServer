@@ -42,5 +42,16 @@ public class UserList {
         return null;
     }
 
+    public String getOnlineUsersStr()
+    {
+        String result="";
+        for (User user: users) {
+            if (user.isOnline())result+=user.getLogin()+" ";
+
+        }
+        if (result.equals("")) return null;
+        else return result;
+    }
+
 
 }

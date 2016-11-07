@@ -16,7 +16,7 @@ public class LoginToChat extends HttpServlet {
 
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-        System.out.println(">> login= "+login+" pass ="+password+ " not found.");
+//        System.out.println(">> login= "+login+" pass ="+password+ " not found.");
         if (userList.check(login,password))
         {
 

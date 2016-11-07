@@ -23,6 +23,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>GetUser</servlet-name>
+		<servlet-class>ua.kiev.prog.geGetListUserOnline</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetUser</servlet-name>
+		<url-pattern>/getusers</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>Login</servlet-name>
 		<servlet-class>ua.kiev.prog.LoginToChat</servlet-class>
 	</servlet>

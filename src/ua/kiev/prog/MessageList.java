@@ -27,8 +27,8 @@ public class MessageList {
 		list.add(m);
 	}
 	
-	public synchronized String toJSON(int n) {
+	public synchronized String toJSON(int n, String to) {
 		if (n == list.size()) return null;
-		return gson.toJson(new JsonMessages(list, n));
+		return gson.toJson(new JsonMessages(list, n, to));
 	}
 }
