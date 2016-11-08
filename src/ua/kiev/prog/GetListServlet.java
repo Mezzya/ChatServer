@@ -21,7 +21,6 @@ public class GetListServlet extends HttpServlet {
         String user = getCookiesbyName("user",req);
 		if ((user==null))
         {
-
             resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
@@ -43,7 +42,7 @@ public class GetListServlet extends HttpServlet {
 						return;
 					}
 
-					String json = msgList.toJSON(from, user);
+					String json = msgList.toJSON(from, user, room);
 					if (json != null) {
 					    OutputStream os = resp.getOutputStream();
 					    byte[] buf = json.getBytes(StandardCharsets.UTF_8);

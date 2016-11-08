@@ -104,4 +104,12 @@ public class Message {
 	public void setText(String text) {
 		this.text = text;
 	}
+
+	public String getRoom() {
+		return room;
+	}
+
+	public void setRoom(String room) {
+		this.room = room;
+	}
 }

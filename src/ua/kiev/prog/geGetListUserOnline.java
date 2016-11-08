@@ -16,7 +16,7 @@ public class geGetListUserOnline extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        System.out.println("Ku-ku");
+
         Cookie[] cookies = req.getCookies();
 
         if (cookies!=null) {
@@ -26,11 +26,13 @@ public class geGetListUserOnline extends HttpServlet {
                 {
                     if (userList.getUserbyLogin(cookie.getValue())!=null)
                     {
-//                        Залогиненый пользователь
+
+//   Залогиненый пользователь
                         String usersonline = userList.getOnlineUsersStr();
-                        if (usersonline==null) msgList.add(new Message("Server","No logined users"));
+                        if (usersonline==null)
+                              msgList.add(new Message("Server",cookie.getValue(),"All","No logined users"));
                         else
-                        msgList.add(new Message("Server",cookie.getValue(),"Users online: "+usersonline));
+                        msgList.add(new Message("Server",cookie.getValue(),"All","Users online: "+usersonline));
                         return;
                     }
 
