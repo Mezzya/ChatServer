@@ -32,6 +32,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>Roomset</servlet-name>
+		<servlet-class>ua.kiev.prog.Room</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Roomset</servlet-name>
+		<url-pattern>/room</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>Login</servlet-name>
 		<servlet-class>ua.kiev.prog.LoginToChat</servlet-class>
 	</servlet>

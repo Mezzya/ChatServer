@@ -21,9 +21,14 @@ public class LoginToChat extends HttpServlet {
         {
 
 //            Заделаем куки типа для валидации на 24 часа
-            Cookie cookie = new Cookie("user",login);
-            cookie.setMaxAge(60*60*24);
-            resp.addCookie(cookie);
+            Cookie cookieOne = new Cookie("user",login);
+            cookieOne.setMaxAge(60*60*24);
+            resp.addCookie(cookieOne);
+            Cookie cookieTwo = new Cookie("room","All");
+            cookieTwo.setMaxAge(60*60*24);
+            resp.addCookie(cookieTwo);
+
+
 
 //            Все ок пускаем в чат
             System.out.println("User - "+login+" Connected to chat");

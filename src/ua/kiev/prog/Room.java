@@ -19,29 +19,32 @@ public class Room extends HttpServlet {
 
         if (cookies!=null)
         {
+
             for (Cookie cookie: cookies) {
 
                 if (cookie.getName().equals("user"))
                 {
-//                    Залогиненый
+
+//                   Залогиненый
                     String room = req.getParameter("room");
 
-                    if (room==null)
+                    if (room!=null)
                     {
-                        if (!room.equals("exit"))
+                        if (room.equals("exit"))
                         {
-//                            Выходим из комнаты
-                            cookie.setValue("");
-                            resp.addCookie(cookie);
+//                          Выходим из комнаты
+                            Cookie cook = new Cookie("room","All");
+                            resp.addCookie(cook);
                             return;
 
                         }
                         else
                         {
-//                            Заходим в комнату
-                            Cookie cook = new Cookie("room",room);
-                            resp.addCookie(cook);
-                            return;
+
+//                         Заходим в комнату
+                           Cookie cook = new Cookie("room",room);
+                           resp.addCookie(cook);
+                           return;
                         }
 
                     }

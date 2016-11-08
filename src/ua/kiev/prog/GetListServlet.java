@@ -18,47 +18,61 @@ public class GetListServlet extends HttpServlet {
     @Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
+        String user = getCookiesbyName("user",req);
+		if ((user==null))
+        {
 
-		Cookie[] cookies = req.getCookies();
+            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
 
-		if (cookies!=null)
-		{
-			for (Cookie cookie: cookies ) {
-//				System.out.println(cookie.getName()+" : "+cookie.getValue());
-				if (cookie.getName().equals("user"))
-				{
+        if (userList.getUserbyLogin(user)!=null)
+			{
+//		    	Такой клиент присутствуетв списке пользователей. Можно отдавать чат
+
+                    String room=getCookiesbyName("room",req);
 
 
-					if (userList.getUserbyLogin(cookie.getValue())!=null)
-					{
-//					Такой клиент присутствуетв списке пользователей. Можно отдавать чат
 
-						String fromStr = req.getParameter("from");
-						int from = 0;
-						try {
-							from = Integer.parseInt(fromStr);
-						} catch (Exception ex) {
-							resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-							return;
-						}
-
-						String json = msgList.toJSON(from, cookie.getValue());
-						if (json != null) {
-							OutputStream os = resp.getOutputStream();
-							byte[] buf = json.getBytes(StandardCharsets.UTF_8);
-							os.write(buf);
-						}
+					String fromStr = req.getParameter("from");
+					int from = 0;
+					try {
+						from = Integer.parseInt(fromStr);
+					} catch (Exception ex) {
+						resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 						return;
-
 					}
 
-				}
+					String json = msgList.toJSON(from, user);
+					if (json != null) {
+					    OutputStream os = resp.getOutputStream();
+					    byte[] buf = json.getBytes(StandardCharsets.UTF_8);
+					    os.write(buf);
+				    }
+				return;
+
+            }
 
 
 
-			}
-		}
+
+
+
+
 
 		resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 	}
+
+	public String getCookiesbyName(String param,HttpServletRequest req)
+    {
+//        Поиск параметра кукки по имени
+        Cookie[] cookies = req.getCookies();
+        if (cookies==null) return null;
+        for (Cookie cookie: cookies) {
+
+            if (cookie.getName().equals(param)) return cookie.getValue();
+
+        }
+        return null;
+    }
 }
